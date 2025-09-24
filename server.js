@@ -1,8 +1,12 @@
 // importando express
 const express = require("express");
 const mysql = require("mysql2/promise");
+const cors = require("cors");
 // cria aplicação
 const app = express();
+app.use(express.json());
+app.use(cors());
+// permite identação e
 // formata o json
 app.set('json spaces', 2)
 app.use(express.json())
