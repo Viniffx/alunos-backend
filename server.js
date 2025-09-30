@@ -74,6 +74,17 @@ app.post("/alunos", async (req, res) => {
 
 })
 
+app.get("/alunos/:id", async (req, res) => {
+    const id = req.params.id;
+    try {
+        const [retorno] = await conexao.execute("SELECT * FROM alunos WHERE id = ?", [id]);
+        res.status(220).json(retorno);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ erro: "Erro ao buscar aluno." });
+    }
+})
+
 /*app.delete("/alunos/:id", (req, res)=>{
     const id = parseInt(req.params.id);
     const indice = alunos.findIndex(a => a.id === id)
@@ -90,3 +101,5 @@ app.post("/alunos", async (req, res) => {
 })*/
 
 app.listen(porta, () => console.log(`Servidor rodando http://localhost:${porta}/`));
+
+
