@@ -30,4 +30,23 @@ async function carregarAluno() {
 
 }
 
+try {
+        const resposta = await fetch(`${API}/${id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(alunoAtualizado)
+        });
+
+        if (resposta.ok) {
+            alert("Aluno atualizado com sucesso!");
+            window.location.href = "index.html"; 
+        } else {
+            alert("Erro ao atualizar aluno!");
+        }
+    } catch (error) {
+        console.error("Erro:", error);
+        alert("Erro de conexão com servidor.");
+    }
+
+
 carregarAluno();

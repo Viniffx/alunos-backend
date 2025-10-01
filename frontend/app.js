@@ -12,24 +12,22 @@ async function carregarTabela() {
 
     // setTimeout(() => {
         tbody.innerHTML = "";
-        tbody.innerHTML = ALUNOS.map(a =>
-            `<tr>
-                <td>${a.id}</td>
-                <td>${a.nome}</td>
-                <td>${a.cpf}</td>
-                <td>${a.cep}</td>
-                <td>${a.uf}</td>
-                <td>${a.rua} senai</td>
-                <td>${a.numero}</td>
-                <td>${a.complemento}</td>
-                <td> 
-                <button>
-                    <a href= "editar.html?id=${a.id}"> Editar</a>
-                    </button> 
-                    <button>Excluir</button>
-                    </td>
-                </tr>`
-        ).join("");
+            tbody.innerHTML = ALUNOS.map(a =>
+          `<tr>
+              <td>${a.id}</td>
+              <td>${a.nome}</td>
+              <td>${a.cpf}</td>
+              <td>${a.cep}</td>
+              <td>${a.uf}</td>
+              <td>${a.rua}</td>
+              <td>${a.numero}</td>
+              <td>${a.complemento}</td>
+              <td> 
+                <button><a href="editar.html?id=${a.id}">Editar</a></button>
+                <button onclick="excluirAluno(${a.id})">Excluir</button>
+              </td>
+          </tr>`
+      ).join("");
     // }, 2000) // 2 segundos
 }
     catch(error) {
@@ -37,5 +35,29 @@ async function carregarTabela() {
    
 }
 }
+
+async function excluirAluno(id) {
+    if (!confirm("Tem certeza que deseja excluir este aluno?")) {
+        return;
+    }
+
+    try {
+        const resposta = await fetch(`http://localhost:3000/alunos/${id}`, {
+            method: "DELETE"
+        });
+
+        if (resposta.ok) {
+            alert("Aluno excluído com sucesso!");
+            carregarTabela(); // recarrega a lista
+        } else {
+            alert("Erro ao excluir aluno!");
+        }
+    } catch (error) {
+        console.error("Erro:", error);
+        alert("Erro de conexão com servidor.");
+    }
+}
+
+
 
 carregarTabela();

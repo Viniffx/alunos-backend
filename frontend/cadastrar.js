@@ -27,17 +27,23 @@ async function salvar(e) {
     }
    
     try {
-        const requisicao = await fetch(API,{
-        method: "POST",
-        headers: {"Content-Type" : "application/json"},
-        body: novoAluno? JSON.stringify(novoAluno): undefined
-    })
-        requisicao.status === 201? console.log(requisicao.json()): console.log("erro na requisição")
+        const requisicao = await fetch(API, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(novoAluno)
+        });
+
+        if (requisicao.status === 201) {
+            alert("Aluno cadastrado com sucesso!");
+            window.location.href = "index.html";
+        } else {
+            alert("Erro ao cadastrar aluno!");
+        }
     } catch (error) {
-        console.error(error)
+        console.error(error);
+        alert("Erro de conexão com servidor.");
     }
-    
-    carregarTabela()
+
 }
 
 formAluno.addEventListener("submit",salvar)
